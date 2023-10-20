@@ -1,0 +1,281 @@
+analysis:
+  registry: pancreas
+  random_state: 23
+  train_size: .8
+  only_patients_who_die: False
+  w_max: 1000000 # cutoff value for weights in inverse probability weighting
+  plots:
+    aggregations:
+      - by_dtd
+      - by_tseq
+    font_size: 22 
+  bootstrap: True
+  n_bootstrap_samples: 1000
+  theta: 2
+  mamma:
+    bin_max: 720
+    bin_width: 90
+    qol_score: 
+      name: fact_swb
+      label: Social well-being
+      min : 0 
+      max : 100       
+    setting: palliativ
+    predictors:
+      - name : age
+        label : age at baseline
+        type : continuous
+        is_baseline : true
+
+      - name : insur
+        label : health insurance
+        type : categorical
+        levels :
+          GKV : statutory
+          PKV : private
+          unbekannt : unknown
+        is_baseline : true
+
+      - name: ecog_baseline
+        label : ECOG at baseline
+        type : ordinal
+        is_baseline : true
+
+      - name: bmi_baseline
+        label: BMI at baseline
+        type : continuous
+        is_baseline : true
+
+      - name : charlsonscore
+        label : Charlson comorbidity score
+        type : ordinal
+        is_baseline : true
+
+      - name : tnmt
+        label : TNM-T staging at primary diagnosis
+        type : categorical
+        levels :
+          missing\ or\ unknown : missing or unknown
+        is_baseline : true
+
+      - name : tnmn
+        label : TNM-N staging at primary diagnosis
+        type : categorical       
+        levels :
+          missing\ or\ unknown : missing or unknown
+        is_baseline : true     
+
+      - name : tnmm
+        label : TNM-M staging at primary diagnosis
+        type : categorical           
+        levels :
+          missing\ or\ unknown : missing or unknown       
+        is_baseline : true
+
+      - name : grade 
+        label : tumor grade at primary diagnosis
+        type: categorical
+        levels :
+          missing\ or\ unknown : missing or unknown       
+        is_baseline : true
+  
+      - name : days_to_death
+        label: days before death
+        type : continuous
+        is_baseline : false
+
+      - name : pat_stays_alive
+        label : no death recorded
+        type : binary
+        is_baseline : false
+
+      - name : last_answered
+        label : last questionnaire answered
+        type : binary
+        is_baseline : false
+
+      - name : t0val
+        label : QoL at baseline
+        type : continuous
+        is_baseline : false
+
+      - name : last_reported_qol
+        label : last reported QoL
+        type  : continuous
+        is_baseline : false
+
+      - name : days_from_progress
+        label : days since last progression
+        type : continuous    
+        is_baseline : false
+ 
+      - name : progression_free_patient
+        label : no disease progressions
+        type : binary
+        is_baseline : false
+
+      - name : bone_metastases
+        label : bone metastases
+        type : binary
+        is_baseline : true
+
+
+  pancreas:
+    bin_max: 780
+    bin_width: 60
+    db_cutoff_date: 2021-6-20
+    max_response_delay: 0
+    questionnaire_freq_days: 60.875
+    qol_score: 
+      name: C15_15
+      label : "Overall QoL"
+      min: 2
+      max: 6
+
+    predictors:
+      - name : age
+        label : age
+        type : continuous
+        is_baseline : true
+
+      - name : sex 
+        label: sex
+        type : categorical
+        is_baseline : true
+
+      - name : insur
+        label : health insurance
+        type : categorical
+        levels :
+          nicht privat : statutory
+          privat : private
+          unbekannt : unknown
+        is_baseline : true
+
+      - name : ecog_baseline
+        label : ECOG at baseline
+        type : ordinal
+        is_baseline : true
+
+      - name : latest_ecog_measure
+        label : latest ECOG recorded        
+        type : ordinal   
+
+      - name : charlsonscore
+        label: Charlson comorbidity score
+        type : ordinal
+        is_baseline : true
+
+      - name : bmi_baseline
+        label : BMI at baseline
+        type : continuous
+        is_baseline : true
+
+      - name : latest_bmi_measure
+        label : latest BMI measured
+        type : continuous      
+
+      - name : relative_change_in_bmi
+        label : relative change of BMI since baseline
+        type : continuous
+
+      - name : localization
+        label : localization of primary tumor
+        type : categorical
+        levels : 
+          Pankreascorpus : pancreas body
+          Pankreaskopf : pancreas head
+          Pankreasschwanz : pancreas tail
+          unbekannt : unknown
+        is_baseline : true
+
+      - name : tnmt
+        label : TNM-T staging at primary diagnosis
+        type : categorical
+        levels: 
+          missing\ or\ unknown : missing or unknown
+        is_baseline : true
+
+      - name : tnmn
+        label : TNM-N staging at primary diagnosis
+        type : categorical
+        levels:
+          missing\ or\ unknown : missing or unknown
+        is_baseline : true
+
+      - name : tnmm
+        label : TNM-M staging at primary diagnosis
+        type : categorical
+        levels: 
+          missing\ or\ unknown : missing or unknown
+        is_baseline : true
+
+      - name : grade
+        label : tumor grade at primary diagnosis
+        type : categorical
+        levels:
+          missing\ or\ unknown : missing or unknown
+        is_baseline : true
+
+      - name : days_to_death
+        label: days before death
+        type : continuous
+
+      - name : pat_stays_alive
+        label : no death recorded
+        type : binary         
+
+      - name : last_answered
+        label : last questionnaire answered
+        type : binary     
+
+      - name : n_progress
+        label : number of disease progressions
+        type : ordinal
+        is_baseline : false
+
+      - name : days_from_progress
+        label : days since last progression
+        type : continuous    
+        is_baseline : false
+
+      - name : progression_free_patient
+        label : no disease progressions
+        type : binary     
+        is_baseline : false
+
+      - name : liver_metastases
+        label : liver metastases
+        type : binary
+        is_baseline : true
+
+      - name : t0val
+        label : QoL at baseline
+        type : ordinal
+        is_baseline : false
+
+      - name : last_reported_qol
+        label : last reported QoL
+        type  : ordinal 
+
+      - name : first_line_treatment
+        label : first line treatment
+        type : categorical
+        levels : 
+          FOLFIRINOX : FOLFIRINOX
+          GEM : gemcitabine
+          GEM+ERL : gemcitabine+erlotinib
+          GEM+NAB : gemcitabine+nab-paclitaxel          
+          "OFF" : FOLFOX/OFF
+          Other : other
+        is_baseline : true
+
+      - name : last_eotreas
+        label : reason for end of last treatment (if any)
+        type : categorical
+        levels: 
+          No\ previous\ therapy\ line : no previous therapy line
+          Other : other
+          Progression : progression
+          Remission/Response : remission/response
+        is_baseline : false
